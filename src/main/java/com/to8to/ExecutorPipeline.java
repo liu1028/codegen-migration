@@ -2,6 +2,7 @@ package com.to8to;
 
 import com.to8to.executor.Executor;
 import freemarker.template.Configuration;
+import org.apache.maven.plugin.MojoFailureException;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -14,13 +15,15 @@ public class ExecutorPipeline {
 
     private List<Executor> executors = new LinkedList<>();
 
-    public void invoke(Configuration freemarkerConfig, MavenContext ctx) {
+    public void invoke(Configuration freemarkerConfig, MavenContext ctx) throws MojoFailureException{
         Iterator<Executor> iterator = executors.iterator();
 
         while (iterator.hasNext()) {
             Executor next = iterator.next();
 
-            next.action(freemarkerConfig, ctx);
+            if(!next.action(freemarkerConfig, ctx)){
+                return ;
+            }
         }
     }
 

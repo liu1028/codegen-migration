@@ -22,7 +22,7 @@ public class MvnContextBuilder implements Executor {
     }
 
     @Override
-    public void action(Configuration freemarkerConfig, MavenContext ctx) {
+    public boolean action(Configuration freemarkerConfig, MavenContext ctx) {
         MavenProject project = ctx.getProject();
 
         File basedir = project.getBasedir();
@@ -37,6 +37,10 @@ public class MvnContextBuilder implements Executor {
         String basePackage = "com.to8to" + (Strings.isNullOrEmpty(suffixPkg) ? "" : "." + suffixPkg);
         ctx.setBasePackage(basePackage);
         ctx.setBasePkgPath("/" + basePackage.replace(".", "/"));
+
+        ctx.setProjcetName(project.getArtifactId());
+
+        return true;
     }
 
     @Override

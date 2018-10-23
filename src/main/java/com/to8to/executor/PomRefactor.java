@@ -15,8 +15,10 @@ public class PomRefactor implements Executor{
     }
 
     @Override
-    public void action(Configuration freemarkerConfig, MavenContext ctx) {
+    public boolean action(Configuration freemarkerConfig, MavenContext ctx) {
 
+
+        return true;
     }
 
     @Override

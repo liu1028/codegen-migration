@@ -2,6 +2,7 @@ package com.to8to.executor;
 
 import com.to8to.MavenContext;
 import freemarker.template.Configuration;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
 
 /**
@@ -16,8 +17,8 @@ public class FileMovementExecutor implements Executor {
     }
 
     @Override
-    public void action(Configuration freemarkerConfig, MavenContext ctx) {
-
+    public boolean action(Configuration freemarkerConfig, MavenContext ctx) throws MojoFailureException {
+        return true;
     }
 
     @Override

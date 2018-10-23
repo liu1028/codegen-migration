@@ -13,12 +13,14 @@ public class FreemarkerConfigCustomizer implements Executor {
     private static final String TEMPLATE_PATH = "/com/to8to/template/";
 
     @Override
-    public void action(Configuration freemarkerConfig, MavenContext ctx) {
+    public boolean action(Configuration freemarkerConfig, MavenContext ctx) {
         freemarkerConfig.setClassForTemplateLoading(MigrationMojo.class, TEMPLATE_PATH);
         freemarkerConfig.setDefaultEncoding("UTF-8");
 //            configuration.setEncoding(Locale.US,"UTF-8");
 //            configuration.setClassForTemplateLoading(Mojo.class.getClassLoader().getClass(),TEMPLATE_PATH);
 //            configuration.setDirectoryForTemplateLoading(new File(resource.toURI())/*new JarFile(TEMPLATE_PATH)*/);
+
+        return true;
     }
 
     @Override

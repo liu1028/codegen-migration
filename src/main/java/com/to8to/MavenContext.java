@@ -20,4 +20,6 @@ public class MavenContext {
     private String basePkgPath;
 
     private String basePackage;
+
+    private String projcetName;
 }

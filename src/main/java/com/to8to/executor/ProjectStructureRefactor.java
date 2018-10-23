@@ -40,13 +40,15 @@ public class ProjectStructureRefactor implements Executor {
     }
 
     @Override
-    public void action(Configuration freemarkerConfig, MavenContext ctx) {
+    public boolean action(Configuration freemarkerConfig, MavenContext ctx) {
 
         String workspacePath = ctx.getWorkspacePath();
 
         buildJavaStructure(mkdirs(workspacePath, MAVEN_MAIN_JAVA_PATH), ctx);
 
         buildJavaResource(mkdirs(workspacePath, MAVEN_MAIN_RESOURCE_PATH), ctx);
+
+        return true;
     }
 
     private void buildJavaStructure(File javaSrcDirFile, MavenContext ctx) {
