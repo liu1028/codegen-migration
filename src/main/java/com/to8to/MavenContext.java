@@ -1,5 +1,6 @@
 package com.to8to;
 
+import com.to8to.process.MyClassLoader;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,6 @@ public class MavenContext {
     private String basePackage;
 
     private String projcetName;
+
+    private MyClassLoader clzLoader;
 }

@@ -2,6 +2,7 @@ package com.to8to.executor;
 
 import com.google.common.base.Strings;
 import com.to8to.MavenContext;
+import com.to8to.process.MyClassLoader;
 import freemarker.template.Configuration;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
@@ -39,6 +40,14 @@ public class MvnContextBuilder implements Executor {
         ctx.setBasePkgPath("/" + basePackage.replace(".", "/"));
 
         ctx.setProjcetName(project.getArtifactId());
+
+        File serverModuleDir = new File(project.getArtifactId() + "-server");
+        File classesDir = new File(serverModuleDir, "target/classes/");
+        File libDir = new File(serverModuleDir, "lib/");
+        MyClassLoader myClassLoader = new MyClassLoader();
+        myClassLoader.tryLoadClassInDir(classesDir);
+        myClassLoader.tryLoadJarInDir(libDir);
+        ctx.setClzLoader(myClassLoader);
 
         return true;
     }

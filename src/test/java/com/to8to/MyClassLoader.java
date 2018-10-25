@@ -2,7 +2,6 @@ package com.to8to;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -32,7 +31,7 @@ public class MyClassLoader extends URLClassLoader {
         File dir = new File(dirPath);
         // 自动加载目录下的jar包
         if (dir.exists() && dir.isDirectory()) {
-            this.addURL(dir);
+            this.addURL(dir, true);
         }
     }
 
@@ -42,16 +41,16 @@ public class MyClassLoader extends URLClassLoader {
         if (dir.exists() && dir.isDirectory()) {
             for (File file : dir.listFiles()) {
                 if (file.isFile() && file.getName().endsWith(".jar")) {
-                    this.addURL(dir);
+                    this.addURL(dir, false);
                     continue;
                 }
             }
         }
     }
 
-    private void addURL(File file) {
+    private void addURL(File file, boolean isDir) {
         try {
-            URL url = new URL("file", null, file.getCanonicalPath());
+            URL url = new URL("file", null, file.getCanonicalPath() + (isDir ? "/" : ""));
             super.addURL(url);
         } catch (MalformedURLException e) {
             e.printStackTrace();
