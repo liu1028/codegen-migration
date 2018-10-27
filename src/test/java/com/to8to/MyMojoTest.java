@@ -79,7 +79,7 @@ public class MyMojoTest extends AbstractMojo {
             dataMap.put("className", "AutoCodeDemo");
             dataMap.put("helloWorld", "通过简单的 <代码自动生产程序> 演示 FreeMarker的HelloWorld！");
             // step4 加载模版文件
-            Template template = configuration.getTemplate("hello.ftl","UTF-8");
+            Template template = configuration.getTemplate("controller.ftl", "UTF-8");
             // step5 生成数据
             File docFile = new File(controllerFile, "AutoCodeDemo.java");
             out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(docFile), Charset.forName("UTF-8")));

@@ -9,7 +9,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Component;
-import org.apache.maven.plugins.annotations.Execute;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.settings.Settings;
@@ -20,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Mojo(name = "migrate")
-@Execute(lifecycle = "package")
+//@Execute(lifecycle = "package")
 public class MigrationMojo extends AbstractMojo {
 
     @Component
@@ -80,7 +79,7 @@ public class MigrationMojo extends AbstractMojo {
             dataMap.put("className", "AutoCodeDemo");
             dataMap.put("helloWorld", "通过简单的 <代码自动生产程序> 演示 FreeMarker的HelloWorld！");
             // step4 加载模版文件
-            Template template = configuration.getTemplate("hello.ftl", "UTF-8");
+            Template template = configuration.getTemplate("controller.ftl", "UTF-8");
             // step5 生成数据
             File docFile = new File(controllerFile, "AutoCodeDemo.java");
             out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(docFile), Charset.forName("UTF-8")));

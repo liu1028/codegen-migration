@@ -43,7 +43,9 @@ public class MvnContextBuilder implements Executor {
 
         File serverModuleDir = new File(project.getArtifactId() + "-server");
         File classesDir = new File(serverModuleDir, "target/classes/");
-        File libDir = new File(serverModuleDir, "lib/");
+        System.out.println("*******classDir: " + classesDir.getAbsolutePath() + "**************");
+        File libDir = new File(serverModuleDir, "target/lib/");
+        System.out.println("*******libDir: " + libDir.getAbsolutePath() + "**************");
         MyClassLoader myClassLoader = new MyClassLoader();
         myClassLoader.tryLoadClassInDir(classesDir);
         myClassLoader.tryLoadJarInDir(libDir);
