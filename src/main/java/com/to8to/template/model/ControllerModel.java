@@ -12,6 +12,8 @@ public class ControllerModel {
 
     private String basePackage;
 
+    private String baseRequestMapping;
+
     private String apiDesciption;
 
     private String className;
@@ -23,7 +25,7 @@ public class ControllerModel {
     private List<MethodModel> methodModels;
 
     @Data
-    class MethodModel{
+    public static class MethodModel {
 
         private String requestMapping;
 
@@ -37,7 +39,11 @@ public class ControllerModel {
 
         private String dtoVar;
 
-//        private String paramMethods;
+        private List<String> paramMethods;
+
+
     }
+
+
 
 }

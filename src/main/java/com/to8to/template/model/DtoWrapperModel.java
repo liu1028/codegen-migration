@@ -19,7 +19,7 @@ public class DtoWrapperModel {
     private List<DtoElement> dtoElements;
 
     @Data
-    class DtoElement{
+    class DtoElement {
 
         private List<String> validations;
 
