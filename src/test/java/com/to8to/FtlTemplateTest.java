@@ -1,7 +1,10 @@
 package com.to8to;
 
+import com.google.common.collect.Lists;
 import com.to8to.template.model.ControllerModel;
 import com.to8to.template.model.ControllerModel.MethodModel;
+import com.to8to.template.model.DtoWrapperModel;
+import com.to8to.template.model.DtoWrapperModel.DtoElement;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.Version;
@@ -19,9 +22,34 @@ public class FtlTemplateTest {
     private final String TEMPLATE_PATH = "/com/to8to/template/";
 
     @Test
-    public void testWrapperModel(){
+    public void testWrapperModel() throws IOException {
+        DtoWrapperModel dtoWrapperModel = new DtoWrapperModel();
+        dtoWrapperModel.setBasePackage("com.to8to.sys.exp");
+        dtoWrapperModel.setImports(
+                Arrays.asList("com.to8to.sys.exp.entity.dto.ConstantCreateDTO",
+                        "javax.validation.constraints.NotNull")
+        );
+        dtoWrapperModel.setDtoClassType("ConstantCreateDtoWrapper");
 
+        List<DtoElement> elements=new ArrayList<>();
+        DtoElement e1=new DtoElement();
+        e1.setClassType("ConstantCreateDTO");
+        e1.setClassVar("constantCreateDTO");
+        e1.setValidations(Arrays.asList("NotNull","Min(1)","Max(100)"));
 
+        DtoElement e2=new DtoElement();
+        e2.setClassType("Double");
+        e2.setClassVar("constantValue");
+//        e2.setValidations(Arrays.asList("Length(max = 100)","NotNull(message = \"适用范围不能为空\")"));
+        e2.setValidations(Lists.newArrayList());
+        elements.add(e1);
+        elements.add(e2);
+
+        dtoWrapperModel.setDtoElements(elements);
+
+        renderAndMakeFile("dtowrapper.ftl",
+                new File("E:\\local-workspace\\migration-maven-plugin\\src\\test\\resources\\output\\model.java"),
+                dtoWrapperModel);
     }
 
     @Test
@@ -42,19 +70,21 @@ public class FtlTemplateTest {
         methodModel.setName("create");
         methodModel.setDtoClassType("ConstantCreateDtoWrapper");
         methodModel.setDtoVar("constantCreateDtoWrapper");
-        methodModel.setParamMethods(Arrays.asList("getConstant", "getInteger"));
+//        methodModel.setParamMethods(Arrays.asList("getConstant", "getInteger"));
+        methodModel.setParamMethods(Lists.newArrayList());
         methodModels.add(methodModel);
 
         cModel.setMethodModels(methodModels);
 
-        File file = new File("E:\\local-workspace\\migration-maven-plugin\\src\\test\\resources\\output\\controller.java");
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-        renderAndMakeFile(file, cModel);
+        renderAndMakeFile("controller.ftl",
+                new File("E:\\local-workspace\\migration-maven-plugin\\src\\test\\resources\\output\\controller.java"),
+                cModel);
     }
 
-    private void renderAndMakeFile(File outputFile, Object modelData) {
+    private void renderAndMakeFile(String templateName,File outputFile, Object modelData) throws IOException {
+        if (!outputFile.exists()) {
+            outputFile.createNewFile();
+        }
 
         Configuration configuration = new Configuration(new Version(2, 3, 28));
         Writer out = null;
@@ -69,7 +99,7 @@ public class FtlTemplateTest {
 //            configuration.setDirectoryForTemplateLoading(new File(resource.toURI())/*new JarFile(TEMPLATE_PATH)*/);
 
             // step2 加载模版文件
-            Template template = configuration.getTemplate("controller.ftl", "UTF-8");
+            Template template = configuration.getTemplate(templateName, "UTF-8");
 
             // step3 生成数据
             out = new BufferedWriter(new OutputStreamWriter(
