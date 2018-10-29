@@ -1,5 +1,6 @@
 package com.to8to.template.model;
 
+import com.google.common.collect.Lists;
 import lombok.Data;
 
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.List;
  */
 @Data
 public class ControllerModel {
+
+    private String storegePath;
 
     private String basePackage;
 
@@ -22,7 +25,9 @@ public class ControllerModel {
 
     private String serviceVar;
 
-    private List<MethodModel> methodModels;
+    private List<String> imports = Lists.newArrayList();
+
+    private List<MethodModel> methodModels = Lists.newArrayList();
 
     @Data
     public static class MethodModel {
@@ -39,11 +44,10 @@ public class ControllerModel {
 
         private String dtoVar;
 
-        private List<String> paramMethods;
+        private List<String> paramMethods= Lists.newArrayList();
 
 
     }
-
 
 
 }

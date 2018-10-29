@@ -95,4 +95,9 @@ public class SimpleTest {
 
         System.out.println(matches);
     }
+
+    @Test
+    public void testArray(){
+
+    }
 }

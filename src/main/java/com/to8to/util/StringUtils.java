@@ -16,6 +16,14 @@ public class StringUtils {
         return compositeURL(ip, port, contextPath, false);
     }
 
+    public static String stripCommonPrefix(String commonPrefix,String src){
+        if(!src.startsWith(commonPrefix)){
+            return src;
+        }
+
+        return src.substring(commonPrefix.length()+1);
+    }
+
     public static String compositeURL(String ip, int port, String contextPath, boolean isSecure) {
         StringBuilder sb = new StringBuilder();
 

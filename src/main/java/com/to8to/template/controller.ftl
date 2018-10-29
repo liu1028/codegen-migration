@@ -32,7 +32,7 @@ public class ${className} {
 
 <#if methodModels??>
   <#list methodModels as method>
-    @PostMapping("${method.requestMapping}")
+    <#if method.requestMapping??>@PostMapping("${method.requestMapping}")</#if>
     @ApiOperation(value = "${method.apiDesc}", response = ${method.responseClassType}.class)
     ResResult<${method.responseClassType}> ${method.name}(@RequestBody @Valid ${method.dtoClassType} ${method.dtoVar}){
         return ResUtils.data(${serviceVar}.${method.name}(<#if method.paramMethods??><#list method.paramMethods as paramMethod>${method.dtoVar}.${paramMethod}()<#if paramMethod_has_next>,</#if></#list></#if>));
