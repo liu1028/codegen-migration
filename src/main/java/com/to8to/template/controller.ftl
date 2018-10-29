@@ -16,7 +16,9 @@ import com.to8to.sc.response.ResUtils;
 import javax.validation.Valid;
 
 @RestController
+<#if baseRequestMapping??>
 @RequestMapping("${baseRequestMapping}")
+</#if>
 @Api(description = "${apiDesciption}")
 public class ${className} {
 
@@ -26,7 +28,7 @@ public class ${className} {
 <#if methodModels??>
   <#list method as methodModel>
     @PostMapping("${method.requestMapping}")
-    @ApiOperation(value = "${method.apiDesc}", response = ${method.responseClassType})
+    @ApiOperation(value = "${method.apiDesc}", response = ${method.responseClassType}.class)
     ResResult<${method.responseClassType}> ${method.name}(@RequestBody @Valid ${method.dtoClassType} ${method.dtoVar}){
         return ResUtils.data(${serviceVar}.${method.name}(<#list method.paramMethods as paramMethod>${method.dtoVar}.${paramMethod}()<#if list_has_next>,</#if></#list>));
     }
