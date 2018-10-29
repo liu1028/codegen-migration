@@ -20,9 +20,18 @@ import javax.validation.Valid;
 @Api(description = "${apiDesciption}")
 public class ${className} {
 
-@Autowired
-private ${serviceClz} ${serviceVar};
+    @Autowired
+    private ${serviceClz} ${serviceVar};
 
-//循环
+<#if methodModels??>
+  <#list method as methodModel>
+    @PostMapping("${method.requestMapping}")
+    @ApiOperation(value = "${method.apiDesc}", response = ${method.responseClassType})
+    ResResult<${method.responseClassType}> ${method.name}(@RequestBody @Valid ${method.dtoClassType} ${method.dtoVar}){
+        return ResUtils.data(${serviceVar}.${method.name}(<#list method.paramMethods as paramMethod>${method.dtoVar}.${paramMethod}()<#if list_has_next>,</#if></#list>));
+    }
+  </#list>
+</#if>
+
 
 }
