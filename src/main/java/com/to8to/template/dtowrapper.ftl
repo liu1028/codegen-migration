@@ -16,6 +16,7 @@ public class ${dtoClassType} {
     @${validate}
   </#list>
     private ${el.classType} ${el.classVar};
+
 </#list>
 
 }

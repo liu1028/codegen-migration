@@ -48,58 +48,6 @@ public class MigrationMojo extends AbstractMojo {
 
         pipeline.invoke(freeMarkerConfiguration, mvnCtx);
 
-
-      /*  File basePkgFile = new File(javaSrcDir, basePackage);
-        if (!basePkgFile.exists()) {
-            basePkgFile.mkdirs();
-        }
-
-        File controllerFile = new File(basePkgFile, "controller");
-
-        outputController(controllerFile, basePackage);*/
-
     }
-
-    private void outputController(File controllerFile, String basePkgPath) {
-
-        String TEMPLATE_PATH = "/com/to8to/template/";
-
-        if (!controllerFile.exists()) {
-            controllerFile.mkdir();
-        }
-
-        Configuration configuration = new Configuration(new Version(2, 3, 28));
-        Writer out = null;
-        try {
-
-
-            // step3 创建数据模型
-            Map<String, Object> dataMap = new HashMap<>();
-            dataMap.put("classPath", basePkgPath + ";");
-            dataMap.put("className", "AutoCodeDemo");
-            dataMap.put("helloWorld", "通过简单的 <代码自动生产程序> 演示 FreeMarker的HelloWorld！");
-            // step4 加载模版文件
-            Template template = configuration.getTemplate("controller.ftl", "UTF-8");
-            // step5 生成数据
-            File docFile = new File(controllerFile, "AutoCodeDemo.java");
-            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(docFile), Charset.forName("UTF-8")));
-            // step6 输出文件
-            template.process(dataMap, out);
-            System.out.println("AutoCodeDemo.java 文件创建成功 !");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (null != out) {
-                    out.flush();
-                    out.close();
-
-                }
-            } catch (Exception e2) {
-                e2.printStackTrace();
-            }
-        }
-    }
-
 
 }

@@ -40,8 +40,8 @@ public class FtlTemplateTest {
         DtoElement e2=new DtoElement();
         e2.setClassType("Double");
         e2.setClassVar("constantValue");
-//        e2.setValidations(Arrays.asList("Length(max = 100)","NotNull(message = \"适用范围不能为空\")"));
-        e2.setValidations(Lists.newArrayList());
+        e2.setValidations(Arrays.asList("Length(max = 100)","NotNull(message = \"适用范围不能为空\")"));
+//        e2.setValidations(Lists.newArrayList());
         elements.add(e1);
         elements.add(e2);
 

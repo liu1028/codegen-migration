@@ -9,11 +9,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import com.to8to.common.search.PageResult;
-import com.to8to.sc.compatible.RPCException;
 import com.to8to.sc.response.ResResult;
 import com.to8to.sc.response.ResUtils;
 
 import javax.validation.Valid;
+
+<#if imports??>
+    <#list imports as import>
+    import ${import};
+    </#list>
+</#if>
 
 @RestController
 <#if baseRequestMapping??>
@@ -32,6 +37,7 @@ public class ${className} {
     ResResult<${method.responseClassType}> ${method.name}(@RequestBody @Valid ${method.dtoClassType} ${method.dtoVar}){
         return ResUtils.data(${serviceVar}.${method.name}(<#if method.paramMethods??><#list method.paramMethods as paramMethod>${method.dtoVar}.${paramMethod}()<#if paramMethod_has_next>,</#if></#list></#if>));
     }
+
   </#list>
 </#if>
 
