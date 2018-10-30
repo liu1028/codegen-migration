@@ -12,6 +12,9 @@ import org.reflections.util.FilterBuilder;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collection;
@@ -97,7 +100,31 @@ public class SimpleTest {
     }
 
     @Test
-    public void testArray(){
+    public void testArray() {
+
+        Class<?> clz = ExecutorPipeline.class;
+
+        Method[] methods = clz.getMethods();
+
+        for (Method method : methods) {
+            if (method.getName().equalsIgnoreCase("f")) {
+
+                Parameter[] parameters = method.getParameters();
+
+                for (Parameter p : parameters) {
+                    Type type = p.getParameterizedType();
+                    if(type instanceof Class) {
+                        Class<?> cls= (Class)type;
+                        System.out.println("type: " + cls.getName() + ", var:" + p.getName());
+                    }else if(type instanceof ParameterizedType){
+                        ParameterizedType ptype=(ParameterizedType)type;
+                        System.out.println("type: "+ptype.getRawType()+"<"+(ptype.getActualTypeArguments()[0]).getTypeName());
+                    }
+
+                }
+
+            }
+        }
 
     }
 }

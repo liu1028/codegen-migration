@@ -18,6 +18,7 @@ import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.*;
 
 /**
@@ -106,22 +107,25 @@ public class ControllerBuilder implements Executor {
             MethodModel methodModel = new MethodModel();
             methodModel.setRequestMapping(StringUtils.stripCommonPrefix(commonReqMapping,getRequestMappingByMethod(method)));
             methodModel.setApiDesc("XXXXX");
+            methodModel.setResponseClassType(getClassName(method.getReturnType().getName()));
+            methodModel.setName(method.getName());
+
+            Parameter[] parameters = method.getParameters();
+            if(parameters.length==1){
+                Parameter parameter = parameters[0];
+
+            }
 
 
+            cModel.getMethodModels().add(methodModel);
         }
 
 
-        List<ControllerModel.MethodModel> methodModels = new ArrayList<>();
         MethodModel methodModel = new MethodModel();
-        methodModel.setApiDesc("新建常量");
-        methodModel.setResponseClassType("Integer");
-        methodModel.setName("create");
         methodModel.setDtoClassType("ConstantCreateDtoWrapper");
         methodModel.setDtoVar("constantCreateDtoWrapper");
         methodModel.setParamMethods(Arrays.asList("getConstant", "getInteger"));
-        methodModels.add(methodModel);
 
-        cModel.setMethodModels(methodModels);
 
         return cModel;
     }
